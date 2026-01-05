@@ -3,6 +3,8 @@ Módulo de Atas de Reunião
 Gerenciamento completo de atas e acompanhamento de ações
 """
 import streamlit as st
+from utils.components import exibir_logo_sidebar, exibir_assinatura_footer
+from auth import login_simples, exibir_info_usuario
 from database import DatabaseManager
 from utils import formatar_data, confirmar_acao, calcular_duracao_reuniao, status_acao
 from datetime import datetime, timedelta
@@ -14,6 +16,9 @@ st.set_page_config(
     page_icon="📋",
     layout="wide"
 )
+
+if not login_simples():
+    st.stop()
 
 # Inicializar banco
 @st.cache_resource
@@ -74,6 +79,9 @@ st.markdown("""
 # Header
 st.title("📋 Gerenciamento de Atas de Reunião")
 st.markdown("Documente reuniões e acompanhe ações e decisões")
+exibir_logo_sidebar()
+exibir_info_usuario()
+
 st.markdown("---")
 
 # Sidebar - Filtros e Ações

@@ -3,6 +3,8 @@ Módulo de Ocorrências
 Gerenciamento completo de ocorrências e incidentes
 """
 import streamlit as st
+from utils.components import exibir_logo_sidebar, exibir_assinatura_footer
+from auth import login_simples, exibir_info_usuario
 from database import DatabaseManager
 from utils import (formatar_data, emoji_severidade, cor_severidade, 
                    emoji_status, cor_status, emoji_tipo_ocorrencia, confirmar_acao)
@@ -17,6 +19,9 @@ st.set_page_config(
     page_icon="🚨",
     layout="wide"
 )
+
+if not login_simples():
+    st.stop()
 
 # Inicializar banco
 @st.cache_resource
@@ -76,6 +81,9 @@ st.markdown("""
 # Header
 st.title("🚨 Gerenciamento de Ocorrências")
 st.markdown("Registre e acompanhe incidentes, problemas e observações")
+exibir_logo_sidebar()
+exibir_info_usuario()
+
 st.markdown("---")
 
 # Verificar ocorrências críticas abertas
